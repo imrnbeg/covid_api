@@ -3,15 +3,10 @@ package geocoding
 const DefaultStateCode = "TT"
 
 type Response struct {
-	Items []*Item `json:"items"`
+	Data []*Data `json:"data"`
 }
 
-type Item struct {
-	Title   string   `json:title`
-	Address *Address `json:address`
-}
-
-type Address struct {
-	State     string `json:state`
-	StateCode string `json:stateCode`
+type Data struct {
+	State     string `json:"region"`
+	StateCode string `json:"region_code"`
 }
