@@ -1,0 +1,31 @@
+{
+    "items": [
+      {
+        "title": "Sironj, Madhya Pradesh, India",
+        "id": "here:cm:namedplace:22807013",
+        "resultType": "locality",
+        "localityType": "city",
+        "address": {
+          "label": "Sironj, Madhya Pradesh, India",
+          "countryCode": "IND",
+          "countryName": "India",
+          "stateCode": "MP",
+          "state": "Madhya Pradesh",
+          "county": "Vidisha",
+          "city": "Sironj",
+          "postalCode": "464228"
+        },
+        "position": {
+          "lat": 24.1019,
+          "lng": 77.69153
+        },
+        "distance": 0,
+        "mapView": {
+          "west": 77.46493,
+          "south": 23.96114,
+          "east": 77.93194,
+          "north": 24.31248
+        }
+      }
+    ]
+  }
