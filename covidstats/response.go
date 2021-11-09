@@ -22,6 +22,6 @@ type StateData struct {
 	Deaths          string `json:deaths`
 	LastUpdatedTime string `json:lastupdatedtime`
 	Recovered       string `json:recovered`
-	MigratedOther   string `json:migratedother`
 	State           string `json:state`
+	StateCode       string `json:statecode`
 }
