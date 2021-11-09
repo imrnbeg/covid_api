@@ -30,7 +30,7 @@ var doc = `{
     	}
   	],
 	"paths": {
-        "/covid/stats": {
+        "/covid/stats/": {
             "get": {
 				"tags": [
 					"Coronavirus Stats"
@@ -79,10 +79,13 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-							"items": {
-								"$ref": "#/definitions/Statewise"
-							}
+                            "type": "object",
+							"properties": {
+								"state": {
+									"type": "object",
+									"$ref": "#/definitions/Statewise"
+								}
+							  }
                         }
                     }
                 }
@@ -93,11 +96,7 @@ var doc = `{
 		"CovidStats": {
 		  "type": "object",
 		  "properties": {
-			"timestamp": {
-			  "type": "string",
-			  "format": "date-time"
-			},
-			"data": {
+			"StateWise": {
 				"type": "array",
 				"items": {
 					"$ref": "#/definitions/Statewise"
@@ -111,12 +110,27 @@ var doc = `{
 		"Statewise": {
 			"type": "object",
 			"properties": {
-			  "recovered": {
+			  "Active": {
 				"type": "string",
-				"format": "date-time"
 			  },
-			  "activecases": {
+			  "Confirmed": {
 				  "type": "string",
+			  },
+			  "Deaths": {
+				"type": "string",
+			  },
+			  "LastUpdatedTime": {
+				"type": "string",
+				"format":"date-time"
+			  },
+			  "Recovered": {
+				"type": "string",
+			  },
+			  "State": {
+				"type": "string",
+			  },
+			  "StateCode": {
+				"type": "string",
 			  }
 			},
 			"xml": {
