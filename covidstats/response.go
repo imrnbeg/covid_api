@@ -1,14 +1,12 @@
 package covidstats
 
 type CovidDataResponse struct {
-	State   *StateData `json:"state"`
-	Country *StateData `json:"country"`
+	State *StateData `json:"state"`
 }
 
-func NewCovidDataResponse(stateData, countryData *StateData) *CovidDataResponse {
+func NewCovidDataResponse(stateData *StateData) *CovidDataResponse {
 	return &CovidDataResponse{
-		State:   stateData,
-		Country: countryData,
+		State: stateData,
 	}
 }
 

@@ -4,10 +4,11 @@ import (
 	"log"
 	"net/http"
 
+	"covid_api/geocoding"
+
 	"github.com/go-redis/redis/v8"
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/mongo"
-	"covid_api/geocoding"
 )
 
 //Get Statewise Covid Stats from Geocoded latitude and longitude
@@ -23,7 +24,6 @@ func HandleLocationStats(cache *redis.Client, db *mongo.Client) func(echo.Contex
 		return ctx.JSON(http.StatusOK, covidDataResponse)
 	}
 }
-
 
 func HandleStats(cache *redis.Client, db *mongo.Client) func(echo.Context) error {
 	return func(ctx echo.Context) error {

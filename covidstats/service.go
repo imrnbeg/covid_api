@@ -18,17 +18,16 @@ func getLocationCovidStats(cache *redis.Client, db *mongo.Client, lat, long stri
 	// get state code from lat, long
 	stateCode := geocoding.GetLocationStateCode(lat, long)
 
-	var stateCodeData, totalStatesData *StateData
-	// first try to get from cache - data for statecode and country(TT)
+	var stateCodeData *StateData
+	// first try to get from cache - data for statecode
 	foundState, stateCodeData, stateErr := getFromCache(cache, stateCode)
-	foundTotal, totalStatesData, totalErr := getFromCache(cache, geocoding.DefaultStateCode)
-	if stateErr == nil && foundState && totalErr == nil && foundTotal {
-		return NewCovidDataResponse(stateCodeData, totalStatesData), nil
+	if stateErr == nil && foundState {
+		return NewCovidDataResponse(stateCodeData), nil
 	}
 
 	// if not found in cache, the hit api -> extract data -> save to db -> save to cache
 	covidData := fetchData(stateCode)
-	stateCodeData, totalStatesData = extractData(stateCode, covidData.StateWise)
+	stateCodeData = extractData(stateCode, covidData.StateWise)
 
 	saveCovidData(db, covidData)
 
@@ -36,12 +35,8 @@ func getLocationCovidStats(cache *redis.Client, db *mongo.Client, lat, long stri
 	if cacheErr != nil {
 		log.Println("Error setting in cache, key", stateCode, ",value", stateCodeData, "err", cacheErr)
 	}
-	cacheErr = setInCache(cache, geocoding.DefaultStateCode, totalStatesData)
-	if cacheErr != nil {
-		log.Println("Error setting in cache, key", stateCode, ",value", totalStatesData, "err", cacheErr)
-	}
 
-	return NewCovidDataResponse(stateCodeData, totalStatesData), nil
+	return NewCovidDataResponse(stateCodeData), nil
 }
 
 func fetchData(stateCode string) *CovidData {
@@ -59,12 +54,10 @@ func fetchData(stateCode string) *CovidData {
 	return &covidData
 }
 
-func extractData(stateCode string, stateWiseData []*StateData) (stateCodeData, totalStatesData *StateData) {
+func extractData(stateCode string, stateWiseData []*StateData) (stateCodeData *StateData) {
 	// log.Println("Response parsed", covidData)
 	for _, stateData := range stateWiseData {
-		if stateData.StateCode == geocoding.DefaultStateCode {
-			totalStatesData = stateData
-		} else if stateData.StateCode == stateCode {
+		if stateData.StateCode == stateCode {
 			stateCodeData = stateData
 		}
 	}
