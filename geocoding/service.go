@@ -14,7 +14,6 @@ func GetLocationStateCode(lat, long string) string {
 		log.Fatalln(err)
 	}
 
-	//We Read the response body on the line below.
 	var geoCodingResponse Response
 	err = json.NewDecoder(resp.Body).Decode(&geoCodingResponse)
 	if err != nil {

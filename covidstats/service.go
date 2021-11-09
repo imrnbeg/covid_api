@@ -84,9 +84,7 @@ func setInCache(cache *redis.Client, key string, value *StateData) error {
 		return err
 	}
 	log.Println("setInCache, key=", key, ", value=", value)
-	// using simple cache get and set instead of Hset and Hget for simplicity
-	// since get, set supports string values , the struct is first marshalled into bytes and a byte string
-	// is stored in cache
+
 	_, err = cache.Set(context.Background(), key, string(bytes), time.Minute*30).Result()
 	return err
 }
@@ -96,7 +94,7 @@ func getFromCache(cache *redis.Client, key string) (bool, *StateData, error) {
 	if err != nil {
 		return false, nil, err
 	}
-	// since byte string is stored in cache, after get, first it is unmarshalled back to struct
+
 	var result StateData
 	err = json.Unmarshal([]byte(strVal), &result)
 	if err != nil {
